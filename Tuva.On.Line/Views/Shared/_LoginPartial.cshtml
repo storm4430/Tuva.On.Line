@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNet.Identity
+@*@if (Request.IsAuthenticated)*@
+@*{*@
+    @*using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+        {
+            @Html.AntiForgeryToken()*@
+
+        <!-- User image -->
+    <li class="user-header">
+        <span class="glyphicon glyphicon-user" style="font-size:72px"></span>
+        <p>
+            @*<small>@llo.medstat.Common.DataHelper.GetUserBranchName(User.Identity.Name)</small>*@
+        </p>
+    </li>
+                                    <!-- Menu Body -->
+    @*<li class="user-body">
+            <div class="col-xs-4 text-center">
+                <a href="#">Followers</a>
+            </div>
+            <div class="col-xs-4 text-center">
+                <a href="#">Sales</a>
+            </div>
+            <div class="col-xs-4 text-center">
+                <a href="#">Friends</a>
+            </div>
+        </li>*@
+                                    <!-- Menu Footer-->
+    <li class="user-footer">
+        @*Смена МО
+            @if (User.IsInRole("Администратор ОУЗ"))
+            {
+                <div class="pull-left">
+                    <a data-url="/manage/ManageCurrentBranch" class="actionhref btn btn-default btn-flat"><i class="fa fa-user fa-fw"></i> Текущая организация</a>
+                </div>
+            }*@
+        <div class="pull-left">
+            <a data-url="/manage/ChangePassword" class="actionhref btn btn-default btn-flat"><i class="fa fa-user fa-fw"></i> Профиль</a>
+        </div>
+        <div class="pull-right">
+            <a id="logoutlink" class="btn btn-default btn-flat" href=""><i class="fa fa-sign-out fa-fw"></i> Выход</a>
+        </div>
+    </li>
+
+@*}*@
+
+<script>
+    window.onload = function () {
+        $("#logoutlink").click(function (e) {
+            $.ajax({
+                url: "/Account/LogOff",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    document.location.href = "/";
+                }
+            });
+            e.preventDefault();
+        });
+    }
+
+</script>
